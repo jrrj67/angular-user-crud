@@ -8,7 +8,26 @@ const LS_KEY = "people";
 })
 export class PersonService {
 
-  constructor() { }
+  constructor() {
+    this.seed();
+  }
+
+  seed(): void {
+
+    if(this.getAll().length > 0) return;
+
+    const people = new Array<Person>();
+
+    const p1 = new Person(1, "Ricardo", 24);
+
+    const p2 = new Person(2, "Amanda", 22);
+
+    people.push(p1, p2);
+
+    people.forEach(person => {
+      this.insert(person);
+    });
+  }
 
   getAll(): Array<Person> {
     const people = localStorage[LS_KEY];
@@ -18,8 +37,6 @@ export class PersonService {
 
   insert(person: Person): void {
     const people = this.getAll();
-
-    person.id = new Date().getTime();
 
     people.push(person);
 
